@@ -2,7 +2,6 @@ SubDir TOP application ;
 
 SubDirSysHdrs [ FDirName $(TOP) ] ;
 SubDirSysHdrs [ FDirName $(TOP) libs ] ;
-SubDirSysHdrs [ FDirName $(TOP) libs libjabber ] ;
 SubDirSysHdrs [ FDirName $(TOP) libs librunview ] ;
 SubDirSysHdrs [ FDirName $(TOP) libs libinterface ] ;
 SubDirSysHdrs [ FDirName $(OPENSSL_INCLUDE_DIR) ] ;

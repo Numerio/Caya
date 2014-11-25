@@ -22,31 +22,6 @@ rule CheckGccPlatform
 	}
 }
 
-rule CheckOpenSSL
-{
-	# CheckOpenSSL ;
-	# Check for OpenSSL and defined HAVE_OPENSSL according, it also defines
-	# OPENSSL_INCLUDE_DIR and OPENSSL_LIBRARY_DIR with location of respectively
-	# include and library files.
-
-	HAVE_OPENSSL = ;
-	OPENSSL_INCLUDE_DIR = ;
-	OPENSSL_LIBRARY_DIR = ;
-
-	local haveHeaders = [ Glob $(USER_INCLUDE_DIRECTORY)/openssl : ssl.h ] ;
-	if $(haveHeaders) {
-		OPENSSL_INCLUDE_DIR = $(USER_INCLUDE_DIRECTORY) ;
-
-		local haveLibs = [ Glob $(USER_LIB_DIRECTORY) : libssl.so ] ;
-		if $(haveLibs) {
-			OPENSSL_LIBRARY_DIR = $(USER_LIB_DIRECTORY) ;
-
-			Echo OpenSSL Headers: $(OPENSSL_INCLUDE_DIR) ;
-			Echo OpenSSL Libs: $(OPENSSL_LIBRARY_DIR) ;
-		}
-		HAVE_OPENSSL = $(haveLibs) ;
-	}
-}
 
 rule CheckExpat
 {

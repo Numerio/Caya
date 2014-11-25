@@ -46,12 +46,6 @@ LOCATE on $(HCACHEFILE) $(JCACHEFILE) = $(GENERATED_DIR) ;
 include [ FDirName $(JAM_DIR) CheckRules ] ;
 CheckGccPlatform ;
 
-CheckOpenSSL ;
-if ! $(HAVE_OPENSSL) {
-	Echo "Warning OpenSSL is missing!" ;
-	exit 0 ;
-}
-
 CheckExpat ;
 if ! $(HAVE_EXPAT) {
 	Echo "Warning Expat is missing!" ;
