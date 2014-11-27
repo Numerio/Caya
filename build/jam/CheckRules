@@ -2,6 +2,10 @@
 #
 # Common checks.
 
+SYSTEM_INCLUDE_DIRECTORY = /boot/system/develop/headers ;
+SYSTEM_LIB_DIRECTORY = /boot/system/develop/lib ;
+
+
 rule CheckGccPlatform
 {
 	# CheckGccPlatform ;
@@ -22,6 +26,31 @@ rule CheckGccPlatform
 	}
 }
 
+rule CheckOpenSSL
+{
+	# CheckOpenSSL ;
+	# Check for OpenSSL and defined HAVE_OPENSSL according, it also defines
+	# OPENSSL_INCLUDE_DIR and OPENSSL_LIBRARY_DIR with location of respectively
+	# include and library files.
+
+	HAVE_OPENSSL = ;
+	OPENSSL_INCLUDE_DIR = ;
+	OPENSSL_LIBRARY_DIR = ;
+
+	local haveHeaders = [ Glob $(SYSTEM_INCLUDE_DIRECTORY)/openssl : ssl.h ] ;
+	if $(haveHeaders) {
+		OPENSSL_INCLUDE_DIR = $(SYSTEM_INCLUDE_DIRECTORY) ;
+
+		local haveLibs = [ Glob $(SYSTEM_LIB_DIRECTORY) : libssl.so ] ;
+		if $(haveLibs) {
+			OPENSSL_LIBRARY_DIR = $(SYSTEM_LIB_DIRECTORY) ;
+
+			Echo OpenSSL Headers: $(OPENSSL_INCLUDE_DIR) ;
+			Echo OpenSSL Libs: $(OPENSSL_LIBRARY_DIR) ;
+		}
+		HAVE_OPENSSL = $(haveLibs) ;
+	}
+}
 
 rule CheckExpat
 {
@@ -29,17 +58,42 @@ rule CheckExpat
 	EXPAT_INCLUDE_DIR = ;
 	EXPAT_LIBRARY_DIR = ;
 
-	local haveHeaders = [ Glob $(USER_INCLUDE_DIRECTORY)/ : expat.h ] ;
+	local haveHeaders = [ Glob $(SYSTEM_INCLUDE_DIRECTORY)/ : expat.h ] ;
 	if $(haveHeaders) {
-		EXPAT_INCLUDE_DIR = $(USER_INCLUDE_DIRECTORY)/ ;
+		EXPAT_INCLUDE_DIR = $(SYSTEM_INCLUDE_DIRECTORY)/ ;
 
-		local haveLibs = [ Glob $(USER_LIB_DIRECTORY) : libexpat.so ] ;
+		local haveLibs = [ Glob $(SYSTEM_LIB_DIRECTORY) : libexpat.so ] ;
 		if $(haveLibs) {
-			EXPAT_LIBRARY_DIR = $(USER_LIB_DIRECTORY) ;
+			EXPAT_LIBRARY_DIR = $(SYSTEM_LIB_DIRECTORY) ;
 
 			Echo Expat Headers: $(EXPAT_INCLUDE_DIR) ;
 			Echo Expat Libs: $(EXPAT_LIBRARY_DIR) ;
 		}
 		HAVE_EXPAT = $(haveLibs) ;
+	}
+}
+
+rule CheckGlib2
+{
+
+	HAVE_GLIB = ;
+	GLIB_INCLUDE_DIR = ;
+	GLIB_LIBRARY_DIR = ;
+	GLIB_CONF_DIR = ;
+
+	local haveHeaders = [ Glob $(SYSTEM_INCLUDE_DIRECTORY)/glib-2.0/ : glib.h ] ;
+	if $(haveHeaders) {
+		GLIB_INCLUDE_DIR = $(SYSTEM_INCLUDE_DIRECTORY)/glib-2.0/ ;
+		GLIB_CONF_DIR = $(SYSTEM_LIB_DIRECTORY)/glib-2.0/include/ ;
+		SYSCONFDIR = GLIB_CONF_DIR ;
+
+		local haveLibs = [ Glob $(SYSTEM_LIB_DIRECTORY) : libglib-2.0.so ] ;
+		if $(haveLibs) {
+			GLIB_LIBRARY_DIR = $(SYSTEM_LIB_DIRECTORY) ;
+
+			Echo GLIB Headers: $(GLIB_INCLUDE_DIR) ;
+			Echo GLIB Libs: $(GLIB_LIBRARY_DIR) ;
+		}
+		HAVE_GLIB = $(haveLibs) ;
 	}
 }

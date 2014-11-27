@@ -1,0 +1,30 @@
+SubDir TOP libs libpurple ;
+
+SubDirSysHdrs [ FDirName $(TOP) libs ] ;
+SubDirSysHdrs [ FDirName $(GLIB_INCLUDE_DIR) ] ;
+SubDirSysHdrs [ FDirName $(GLIB_CONF_DIR) ] ;
+SubDirSysHdrs [ FDirName /boot/system/develop/headers/libxml2/ ] ;
+
+StaticLibrary libpurple.a :
+account.c       dnssrv.c        pounce.c                 sslconn.c
+accountopt.c    eventloop.c     prefs.c                  status.c
+blist.c         ft.c            privacy.c                stringref.c
+buddyicon.c     idle.c          proxy.c                  stun.c
+certificate.c   imgstore.c      prpl.c                   theme-loader.c
+cipher.c        log.c           theme-manager.c
+circbuffer.c    marshallers.c   theme.c
+cmds.c          media.c         request.c                upnp.c
+connection.c    mediamanager.c  roomlist.c               util.c
+conversation.c  mime.c          savedstatuses.c          value.c
+core.c          nat-pmp.c       server.c                 version.c
+network.c       signals.c       whiteboard.c
+notify.c        smiley.c        xmlnode.c
+debug.c         ntlm.c          sound-theme-loader.c
+desktopitem.c   plugin.c        sound-theme.c
+dnsquery.c      pluginpref.c    sound.c
+
+# purple-client-example.c
+# purple-client.c dbus-server.c dbus-useful.c
+;
+
+LINKFLAGS on libpurple.a += -L$(GLIB_LIBRARY_DIR) ;
