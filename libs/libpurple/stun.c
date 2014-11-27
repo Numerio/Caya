@@ -39,6 +39,10 @@
 #include <sys/sockio.h>
 #endif
 
+#ifdef __HAIKU__
+#include <sys/sockio.h>
+#endif
+
 #include "debug.h"
 #include "account.h"
 #include "dnsquery.h"

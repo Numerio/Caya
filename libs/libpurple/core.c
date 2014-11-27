@@ -63,6 +63,10 @@
 #  include "dbus-bindings.h"
 #endif
 
+#ifdef __HAIKU__
+#define STATIC_PROTO_INIT static void static_proto_init(void) {  }
+#endif
+
 struct PurpleCore
 {
 	char *ui;

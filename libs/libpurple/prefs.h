@@ -29,6 +29,10 @@
 
 #include <glib.h>
 
+#ifdef __HAIKU__
+#define SYSCONFDIR "/boot/home/config/settings/"
+#endif
+
 /**
  * Preference data types.
  */

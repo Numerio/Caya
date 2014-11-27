@@ -36,6 +36,11 @@
 #include "imgstore.h"
 #include "time.h"
 
+#ifdef __HAIKU__
+#include <time.h>
+#define SIZEOF_TIME_T 4
+#endif
+
 static GSList *loggers = NULL;
 
 static PurpleLogLogger *html_logger;

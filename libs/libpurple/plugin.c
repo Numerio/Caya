@@ -36,6 +36,10 @@
 #include "valgrind.h"
 #include "version.h"
 
+#ifdef __HAIKU__
+#define LIBDIR "/boot/home/config/add-ons/purple"
+#endif
+
 typedef struct
 {
 	GHashTable *commands;

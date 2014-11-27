@@ -31,6 +31,10 @@
 #ifndef _PURPLE_CERTIFICATE_H
 #define _PURPLE_CERTIFICATE_H
 
+#ifdef __HAIKU__
+#define DATADIR "/boot/system/data/ssl/cert"
+#endif
+
 #include <time.h>
 
 #include <glib.h>
